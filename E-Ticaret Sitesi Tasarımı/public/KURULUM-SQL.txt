@@ -1,0 +1,74 @@
+NART FALCON E-TICARET - SQL KURULUMU
+====================================
+
+GEREKSINIMLER
+- PHP 8.1 veya daha yeni
+- PDO MySQL eklentisi
+- MySQL 5.7+ veya MariaDB 10.3+
+- Apache/cPanel hosting
+
+KURULUM
+1. dist klasorunun ICINDEKI tum dosyalari magaza alt alan adinin belge kokune yukleyin.
+2. cPanel > MySQL Databases bolumunden bir veritabani ve kullanici olusturun.
+3. Kullaniciyi veritabanina ekleyip tum yetkileri verin.
+4. Tarayicida https://alan-adiniz.com/install.php adresini acin.
+5. Veritabani bilgilerini ve ilk yonetici hesabini girin.
+6. Kurulum tamamlandiginda /#/admin adresinden giris yapin.
+7. Sistem ayarlarinda kurumsal site adresini, gercek WhatsApp numarasini ve
+   satici bilgilerini tamamlayin. Bu bilgiler eksikken magaza siparise acilamaz.
+
+KURUCU NE YAPAR?
+- database/schema.sql semasini uygular.
+- Baslangic kategorilerini, urunlerini ve magazanin genel ayarlarini ekler.
+- Guvenli baslangic icin acceptingOrders degerini false olarak ayarlar.
+- Parolayi password_hash ile saklayan ilk yonetici hesabini olusturur.
+- api/config.local.php dosyasini atomik olarak yazar.
+- storage/install.lock olusturarak yeniden kurulumu kilitler.
+
+GUVENLIK
+- SQL yazma islemleri yonetici oturumu ve CSRF dogrulamasi gerektirir.
+- config.local.php, schema.sql ve install.lock web erisimine kapalidir.
+- Kurulum tamamlandiktan sonra install.php yeni kurulum kabul etmez.
+- Veritabani parolasini kaynak koda veya Git deposuna eklemeyin.
+
+YEDEK
+Yonetim paneli > Sistem ayarlari > Yedegi Indir islemi urunleri,
+kategorileri, olcu bazli fiyat farklarini, ayarlari ve son islem
+kayitlarini JSON olarak indirir.
+
+Yedegi Geri Yukle islemi yalnizca giris yapmis yonetici ve gecerli CSRF
+oturumuyla calisir. Dosyanin semasi, kategorileri, urunleri, varyantlari,
+gorselleri ve ayarlari once dogrulanir. Gecerli yedek tek transaction icinde
+uygulanir; hata olursa mevcut veride hicbir degisiklik yapilmaz.
+
+MAGAZA AYARLARI
+- Duyuru metni, WhatsApp numarasi ve siparis durumu panelden yonetilir.
+- Kurumsal site baglantisi kaynak koddan bagimsiz olarak panelden degistirilebilir.
+- Ticari unvan, adres, e-posta, kayit/vergi bilgisi ve faaliyet alani notu
+  magazanin iletisim ve yasal bilgilendirme ekranlarinda kullanilir.
+- Gecerli 10-15 haneli WhatsApp numarasi, ticari unvan, adres ve e-posta
+  tamamlanmadan Siparise Acik secenegi API tarafinda reddedilir.
+
+KATALOG YONETIMI
+- Kategoriler panelden eklenebilir, yeniden adlandirilabilir ve bos ise silinebilir.
+- Urunlere birden fazla renk ve olcu eklenebilir.
+- Her olcu icin temel fiyata eklenecek fiyat farki tanimlanabilir.
+- Olcu secildiginde fiyat magazada, sepette ve WhatsApp siparis metninde aninda guncellenir.
+- Her urune en fazla 4 PNG, JPG veya WebP gorseli eklenebilir; her gorsel en fazla 700 KB olabilir.
+- Yonetim panelinde gorseller onizlenebilir, tek tek silinebilir ve kapak gorseli degistirilebilir.
+- Ilk gorsel magazada urun kapagi, diger gorseller urun detay galerisinde kullanilir.
+- Mevcut varsayilan Nart Falcon urun gorseli panelde gorunur; kaldirilabilir ve daha sonra geri getirilebilir.
+
+YAYIN VE GERI DONUS
+- Yuklemeden once mevcut belge kokunun ve MySQL veritabaninin yedegini alin.
+- Once magaza alt alaninda kurulum, giris, urun CRUD, 4 gorsel yukleme ve
+  yedek geri yukleme testlerini tamamlayin.
+- Geri donus gerekirse belge koku yedegini ve cPanel/MySQL yedegini birlikte
+  geri yukleyin; yalnizca dosyalari geri almak veri semasini geri almaz.
+- Kurulumdan sonra ZIP dosyasini belge kokunden kaldirin.
+
+NOT
+Demo veri katmani yalnizca development derlemesinde kullanilir. Uretim
+derlemesi API veya SQL hatasinda demo veriye gecmez; acik hata gosterir.
+Gercek SQL, WhatsApp, SSL, dosya izinleri ve cPanel limitleri canli hostingde
+ayrica dogrulanmalidir.

@@ -1,0 +1,15 @@
+{
+  "title": "Nart Falcon Creative Goods",
+  "description": "Nart Falcon Creative Goods: özgün tasarımları keşfedin, sepetinizi oluşturun ve sipariş talebinizi WhatsApp üzerinden tamamlayın.",
+  "language": "tr",
+  "icons": {
+    "icon": "/assets/symbol.svg"
+  },
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
